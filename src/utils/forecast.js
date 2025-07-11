@@ -5,13 +5,13 @@ const forecast = (latitude, longitude, callback) => {
         const url = `https://api.weatherstack.com/current?access_key=51dc9d27611f31adc0f92e150d0aadc9&query=${latitude},${longitude}&units=m`
 
         postRequest({url, json: true}, (error, {body} = {}) => {            
-            const {error: errorBody, current, localtime} = body
+            const {error: errorBody, current, location} = body
             if (error) {
                 callback('Unable to connect to weather service!', undefined)
             } else if (errorBody) {
                 callback('Unable to find location', undefined)
             } else {
-                callback(undefined, `${current.weather_descriptions[0]}. It is currently ${current.temperature} degress out. It feels like ${current.feelslike} degress out. and Time is ${localtime}`)
+                callback(undefined, `${current.weather_descriptions[0]}. It is currently ${current.temperature} degress out. It feels like ${current.feelslike} degress out. and Time is ${location.localtime}`)
             }
         })
 }
